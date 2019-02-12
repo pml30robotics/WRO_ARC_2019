@@ -1,0 +1,2 @@
+/usr/sbin/i2cset
+/usr/lib/busybox/usr/sbin/i2cset 50

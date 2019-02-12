@@ -1,0 +1,3 @@
+/usr/bin/chcon
+chcon.coreutils 100
+/usr/bin/chcon.coreutils 100

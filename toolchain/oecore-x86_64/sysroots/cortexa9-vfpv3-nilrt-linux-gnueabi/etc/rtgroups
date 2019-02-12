@@ -1,0 +1,45 @@
+# #
+# # ATTENTION:
+# #
+# # Always use the kernel-specific files rtgroups-<kernelversion>.
+# # 
+# # This is the precedence order for configuration files:
+# #
+# #  - /etc/rtgroups-<exact-kernel-version>
+# #  - /etc/rtgroups-<general-version> (e.g. /etc/rtgroups-3.8)
+# #  - use default priorities (do nothing)
+# # 
+# # See also man rtgroups
+#
+# Associate processes into named groups with default priority and 
+# scheduling policy.
+#
+# Format is: <groupname>:<sched>:<prio>:affinity:<regex>
+#
+# groupname must start at beginning of line.
+# sched must be one of: 'f' (fifo)
+#                       'b' (batch)
+#                       'r' (round-robin)
+#                       'o' (other) 
+#                       '*' (leave alone)
+# affinity is a hex number, see taskset(1) for details about number of CPUs,
+#                       '*' means "leave alone"
+# regex is an awk regex
+#
+# The regex is matched against process names as printed by "ps -eo cmd".
+#
+# Any given process name may match more than one group. Default priority
+# and scheduling policy are taken from the last matching regexp. So the
+# more general groups should be placed before more specific groups.
+# 
+# 
+# kthreads:*:*:*:\[.*\]$
+# softirq:f:1:*:\[ksoftirqd\/.*\]
+# rcu:f:1:*:\[rcu[bc]\/.*\]
+# rpciod:o:*:*:\[rpciod.*\]
+# lockd:*:*:*:\[lockd.*\]
+# nfsd:*:*:*:\[nfsd.*\]
+# hardirq:f:50:*:\[irq[\-_/].*\]
+# rcun:f:99:*:\[rcun\/.*\]
+# watchdog:f:99:*:\[watchdog\/.*\]
+# migration:f:99:*:\[migration\/.*\]

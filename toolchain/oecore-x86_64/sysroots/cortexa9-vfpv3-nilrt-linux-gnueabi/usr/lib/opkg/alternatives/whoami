@@ -1,0 +1,3 @@
+/usr/bin/whoami
+/usr/lib/busybox/usr/bin/whoami 50
+/usr/bin/whoami.coreutils 100

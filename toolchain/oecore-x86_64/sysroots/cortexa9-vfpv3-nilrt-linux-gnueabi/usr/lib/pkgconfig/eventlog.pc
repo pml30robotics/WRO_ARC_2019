@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=/usr/lib
+includedir=/usr/include/eventlog
+
+Name: EventLog
+Description: General system logging format library
+Version: 0.2.13
+Cflags: -I${includedir}
+Libs: -L${libdir} -levtlog

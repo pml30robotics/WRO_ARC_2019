@@ -1,0 +1,2 @@
+/sbin/fsck.minix
+/usr/lib/busybox/sbin/fsck.minix 50

@@ -1,0 +1,3 @@
+/bin/stat
+/usr/lib/busybox/bin/stat 50
+/bin/stat.coreutils 100

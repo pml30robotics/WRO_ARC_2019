@@ -1,0 +1,3 @@
+/usr/bin/free
+/usr/lib/busybox/usr/bin/free 50
+/usr/bin/free.procps 200

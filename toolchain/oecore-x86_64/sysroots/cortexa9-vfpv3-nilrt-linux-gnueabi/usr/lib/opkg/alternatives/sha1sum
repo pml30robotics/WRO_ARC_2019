@@ -1,0 +1,3 @@
+/usr/bin/sha1sum
+/usr/lib/busybox/usr/bin/sha1sum 50
+/usr/bin/sha1sum.coreutils 100

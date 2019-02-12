@@ -1,0 +1,3 @@
+/bin/true
+/usr/lib/busybox/bin/true 50
+/bin/true.coreutils 100

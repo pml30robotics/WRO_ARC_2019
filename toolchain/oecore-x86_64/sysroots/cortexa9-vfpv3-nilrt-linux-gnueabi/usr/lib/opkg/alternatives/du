@@ -1,0 +1,3 @@
+/usr/bin/du
+/usr/lib/busybox/usr/bin/du 50
+/usr/bin/du.coreutils 100

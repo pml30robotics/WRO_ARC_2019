@@ -1,0 +1,4 @@
+/bin/mountpoint
+/usr/lib/busybox/bin/mountpoint 50
+/bin/mountpoint.util-linux 80
+/bin/mountpoint.sysvinit 20

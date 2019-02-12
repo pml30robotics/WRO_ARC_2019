@@ -1,0 +1,3 @@
+/bin/grep
+/usr/lib/busybox/bin/grep 50
+/bin/grep.grep 100

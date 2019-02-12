@@ -1,0 +1,5 @@
+#!/bin/bash
+realpath=`readlink -fn $0`
+realdir=`dirname $realpath`
+export TERMINFO_DIRS=$realdir/../../etc/terminfo:/etc/terminfo:/usr/share/terminfo:/usr/share/misc/terminfo:/lib/terminfo
+exec -a `dirname $realpath`/python3.5 `dirname $realpath`/python3.5.real "$@"

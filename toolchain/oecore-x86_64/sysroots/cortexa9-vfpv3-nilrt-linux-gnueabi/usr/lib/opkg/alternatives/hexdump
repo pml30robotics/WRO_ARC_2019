@@ -1,0 +1,3 @@
+/usr/bin/hexdump
+/usr/lib/busybox/usr/bin/hexdump 50
+/usr/bin/hexdump.util-linux 80

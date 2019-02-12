@@ -1,0 +1,2 @@
+/sbin/mkfs.minix
+/usr/lib/busybox/sbin/mkfs.minix 50

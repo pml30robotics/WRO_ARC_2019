@@ -1,0 +1,3 @@
+/sbin/sulogin
+/sbin/sulogin.util-linux 80
+/usr/lib/busybox/sbin/sulogin 50

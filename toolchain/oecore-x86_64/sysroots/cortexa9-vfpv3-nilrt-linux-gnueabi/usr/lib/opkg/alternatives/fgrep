@@ -1,0 +1,3 @@
+/bin/fgrep
+/usr/lib/busybox/bin/fgrep 50
+/bin/fgrep.grep 100

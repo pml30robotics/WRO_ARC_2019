@@ -30,28 +30,31 @@ INCS_DIR = include
 SRC_DIR = src
 LIB_DIR = lib
 BIN_DIR = bin
+TOOLCHAIN_DIR = toolchain
 
 ################################################################
 # Toolchain setup
 ################################################################
-SYSROOT := $(OECORE_TARGET_SYSROOT)
+OECORE_SYSROOT := $(TOOLCHAIN_DIR)/oecore-x86_64/sysroot
+TARGET_SYSROOT := $(OECORE_SYSROOT)/cortexa9-vfpv3-nilrt-linux-gnueabi
+NATIVE_SYSROOT := $(OECORE_SYSROOT)/x86_64-nilrtsdk-linux
 CROSS_COMPILER := arm-nilrt-linux-gnueabi
 PATH := \
-	$(OECORE_NATIVE_SYSROOT)/usr/bin\
-	:$(OECORE_NATIVE_SYSROOT)/usr/bin/arm-nilrt-linux-gnueabi:$(PATH)
+	$(NATIVE_SYSROOT)/usr/bin\
+	:$(NATIVE_SYSROOT)/usr/bin/arm-nilrt-linux-gnueabi:$(PATH)
 MYRIO_TARGET := MyRio_1900
 
 ################################################################
 # Compilers settings and options. Mostly copied
-# from 'environment-setup-cortexa9-vfpv3-nilrt-linux-gnueabi'
+# from 'toolchain/oecore-x86_64/sysroot/environment-setup-cortexa9-vfpv3-nilrt-linux-gnueabi'
 ################################################################
 PLATFORM := -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3 \
--mtune=cortex-a9 --sysroot=$(SYSROOT)
+-mtune=cortex-a9 --sysroot=$(TARGET_SYSROOT)
 
 CC = $(CROSS_COMPILER)-gcc $(PLATFORM)
 CXX = $(CROSS_COMPILER)-g++ $(PLATFORM)
 CPP = $(CROSS_COMPILER)-gcc -E $(PLATFORM)
-LD = $(CROSS_COMPILER)-ld  --sysroot=$(SYSROOT)
+LD = $(CROSS_COMPILER)-ld  --sysroot=$(TARGET_SYSROOT)
 AS = $(CROSS_COMPILER)-as
 AR = $(CROSS_COMPILER)-ar
 
@@ -112,7 +115,7 @@ build: info _working_dirs $(BIN_DIR)/$(PROJECT_NAME)
 
 .PHONY: info
 info:
-	@echo -- $(SYSROOT)
+	@echo -- $(TARGET_SYSROOT)
 	@echo -- Project name: $(PROJECT_NAME)
 	@echo -- Compiling modules: $(MODULES)
 	@echo -- DMACROS: $(DMACROS)

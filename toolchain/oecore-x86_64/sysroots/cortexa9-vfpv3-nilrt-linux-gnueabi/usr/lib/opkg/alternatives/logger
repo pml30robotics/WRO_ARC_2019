@@ -1,0 +1,3 @@
+/usr/bin/logger
+/usr/lib/busybox/usr/bin/logger 50
+/usr/bin/logger.util-linux 80

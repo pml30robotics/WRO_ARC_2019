@@ -1,0 +1,3 @@
+/usr/bin/tty
+/usr/lib/busybox/usr/bin/tty 50
+/usr/bin/tty.coreutils 100

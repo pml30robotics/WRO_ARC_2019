@@ -1,0 +1,2 @@
+/usr/sbin/i2cget
+/usr/lib/busybox/usr/sbin/i2cget 50

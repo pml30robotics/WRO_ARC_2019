@@ -1,0 +1,3 @@
+/usr/bin/bzcat
+/usr/lib/busybox/usr/bin/bzcat 50
+/usr/bin/bzcat.bzip2 100

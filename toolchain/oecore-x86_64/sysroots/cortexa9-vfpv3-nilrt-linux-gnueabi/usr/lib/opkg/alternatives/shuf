@@ -1,0 +1,3 @@
+/usr/bin/shuf
+/usr/lib/busybox/usr/bin/shuf 50
+/usr/bin/shuf.coreutils 100

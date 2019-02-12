@@ -1,0 +1,3 @@
+/bin/egrep
+/usr/lib/busybox/bin/egrep 50
+/bin/egrep.grep 100

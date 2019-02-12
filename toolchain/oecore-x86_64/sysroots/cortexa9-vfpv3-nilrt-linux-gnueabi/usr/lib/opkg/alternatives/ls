@@ -1,0 +1,4 @@
+/bin/ls
+/usr/lib/busybox/bin/ls 50
+ls.coreutils 100
+/bin/ls.coreutils 100

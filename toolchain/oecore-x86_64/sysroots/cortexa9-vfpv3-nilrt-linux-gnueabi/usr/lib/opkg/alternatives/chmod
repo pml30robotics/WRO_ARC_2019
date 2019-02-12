@@ -1,0 +1,3 @@
+/bin/chmod
+/usr/lib/busybox/bin/chmod 50
+/bin/chmod.coreutils 100

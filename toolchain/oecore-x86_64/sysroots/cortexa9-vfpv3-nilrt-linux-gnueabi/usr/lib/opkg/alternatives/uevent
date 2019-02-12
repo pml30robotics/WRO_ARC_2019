@@ -1,0 +1,2 @@
+/sbin/uevent
+/usr/lib/busybox/sbin/uevent 50
