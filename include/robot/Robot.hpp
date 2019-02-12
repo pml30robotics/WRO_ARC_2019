@@ -2,17 +2,12 @@
 #define ROBOT_ROBOT_HPP
 
 #include "myRio/MyRio.h"
-#include "myRio_enums.hpp"
 
 /**
  * Structs and classes decloration.
  */
 struct Robot;
 struct RobotDestroyer;
-struct PWMSetup;
-struct DIO;
-struct PWM;
-struct DIOConfig;
 
 /**
  * @enum RobotDestroyer
@@ -31,7 +26,11 @@ private:
  */
 struct Robot {
   static Robot& get_instance();
+  NiFpga_Status start_session();
+  NiFpga_Status end_session();
+  NiFpga_Status get_status() const;
 private:
+  NiFpga_Status status;
   Robot() {};
   Robot(Robot const &);
   Robot& operator=(Robot&);
@@ -42,28 +41,50 @@ private:
   static RobotDestroyer destroyer;
 };
 
+/******************************
+ *
+ * Enum decloration.
+ *
+ ******************************/
+enum struct MyRioExpPort;
+enum struct MyRioClockDivider : uint8_t;
+enum struct MyRioConfigBitMask : uint8_t;
+
 /**
- * @struct PwmSetup
- * @brief Structure describing PWM initializing settings.
+ * @enum MyRioExpPort
+ * @brief NI MyRio expansion ports definition.
  */
-struct PWMSetup {
-  MyRioExpPort port; /**< MXP.A, MXP.B, MSP port on MyRio. */
-  uint8_t pwm_cnfg; /**< Configure PWM subsystem, first bit determins INV, third bit determins MODE. */
-  uint8_t pwm_num; /**< Number of pwm pin according to default FPGA personality. */
-  MyRioClockDivider pwm_clock; /**<  Clock settings which set frequency according to f_clk / pwm_clock,
-    * where base clock frequency f_clk is 40Mhz. */
-  uint16_t pwm_max; /**< Sets maximum counter value. The counter counts from 0 to pwm
-    * The final frequency of the PWM waveform is f_clk / pwm_clock / pwm_max,
-    * e.g. 40 MHz / 4 / 1000 = 10 kHz. */
+enum struct MyRioExpPort { MXP_A, MXP_B, MSP };
+
+/**
+ * @enum MyRioClockDivider
+ * @brief Clock divider constansts for PWM, SPI subsystems configurations.
+ */
+enum struct MyRioClockDivider : uint8_t {
+  CLOCK_DIV_OFF = 0b00000000,
+  CLOCK_DIV_1 = 0b00000001,
+  CLOCK_DIV_2 = 0b00000010,
+  CLOCK_DIV_4 = 0b00000011,
+  CLOCK_DIV_8 = 0b00000100,
+  CLOCK_DIV_16 = 0b00000101,
+  CLOCK_DIV_32 = 0b00000110,
+  CLOCK_DIV_64 = 0b00000111
 };
 
 /**
- * @struct PwmConfig
- * @brief Structure contains ready-to-use PWM information.
+ * @enum MyRioConfigBitMasks
+ * @brief Bit masks for configuration of defult FPGA personality.
  */
-struct PWM {
-  uint32_t pwm_cmp; /**< Compare register, e.g. PWMA_1CMP. */
-  uint16_t pwm_resolution; /**< Maximum count of pwm */
+enum struct MyRioConfigBitMask : uint8_t {
+  // MSP
+  MSP_PWM0_ENABLE = 0b00000010,
+  MSP_PWM1_ENABLE = 0b00001000,
+  MSP_ENC0_ENABLE = 0b00000001,
+  MSP_ENC1_ENABLE = 0b00000100,
+  // MXP
+  MXP_PWM0_ENABLE = 0b00000100,
+  MXP_PWM1_ENABLE = 0b00001000,
+  MXP_PWM2_ENABLE = 0b00010000,
 };
 
 #endif

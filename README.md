@@ -16,4 +16,4 @@ As a main controller is used **NI myRIO-1900** which have 2 **Expansion Port (MX
 - USB: 2.0 Hi-Speed
 - WI-FI: IEEE 802.11 b,g,n
 
-[Official documentation](http://www.ni.com/pdf/manuals/376047c.pdf)
+[myRIO official documentation](http://www.ni.com/pdf/manuals/376047c.pdf)

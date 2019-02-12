@@ -2,7 +2,7 @@
 #define ROBOT_MYRIO_ENCODER_HPP
 
 #include "Encoder.hpp"
-#include "myRio_enums.hpp"
+#include "Robot.hpp"
 #include "Registers.hpp"
 
 struct MyRioEncoder : Encoder {

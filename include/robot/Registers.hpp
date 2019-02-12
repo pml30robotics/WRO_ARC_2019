@@ -2,7 +2,7 @@
 #define ROBOT_REGISTERS_HPP
 
 #include "myRio/MyRio.h"
-#include "myRio_enums.hpp"
+#include "Robot.hpp"
 
 struct Registers {
   enum : uint8_t {

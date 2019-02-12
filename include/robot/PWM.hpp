@@ -2,7 +2,7 @@
 #define ROBOT_PWM_HPP
 
 #include "myRio/MyRio.h"
-#include "myRio_enums.hpp"
+#include "Robot.hpp"
 
 struct PWM {
   enum : uint8_t {

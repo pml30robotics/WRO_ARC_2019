@@ -1,13 +1,14 @@
 #ifndef ROBOT_DIO_HPP
 #define ROBOT_DIO_HPP
 
-#include "myRio_enums.hpp"
+#include "Robot.hpp"
 #include "myRio/MyRio.h"
 #include "Registers.hpp"
 
 struct DIO {
   /* Member functions. */
   DIO(MyRioExpPort port, uint8_t pin, uint8_t dir);
+  DIO(MyRioExpPort port, uint8_t pin);
   void write(uint8_t val);
   uint8_t read();
   NiFpga_Status get_status();

@@ -26,7 +26,3 @@ void TetrixMotor::reset() {
   if (encoder != nullptr)
     encoder->reset();
 }
-
-int32_t TetrixMotor::move_to_position_abs(int32_t cnts) { return 0; }
-
-int32_t TetrixMotor::move_to_position_rel(int32_t cnts) { return 0; }

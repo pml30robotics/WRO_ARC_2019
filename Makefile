@@ -35,7 +35,7 @@ TOOLCHAIN_DIR = toolchain
 ################################################################
 # Toolchain setup
 ################################################################
-OECORE_SYSROOT := $(TOOLCHAIN_DIR)/oecore-x86_64/sysroot
+OECORE_SYSROOT := $(TOOLCHAIN_DIR)/oecore-x86_64/sysroots
 TARGET_SYSROOT := $(OECORE_SYSROOT)/cortexa9-vfpv3-nilrt-linux-gnueabi
 NATIVE_SYSROOT := $(OECORE_SYSROOT)/x86_64-nilrtsdk-linux
 CROSS_COMPILER := arm-nilrt-linux-gnueabi
@@ -79,7 +79,7 @@ INCS = -I$(addprefix $(INCS_DIR), $(dir $(subst $(SRC_DIR), , $<)))
 ################################################################
 # Defining which directories should be compiled
 ################################################################
-override MODULES += $(SRC_DIR) $(SRC_DIR)/robot/myRio
+override MODULES += $(SRC_DIR) $(SRC_DIR)/robot/myRio $(SRC_DIR)/robot
 BUILD_MODULES = $(addprefix $(BUILD_DIR)/, \
 	$(patsubst /%, %, $(subst $(SRC_DIR), , $(MODULES))))
 
@@ -115,7 +115,7 @@ build: info _working_dirs $(BIN_DIR)/$(PROJECT_NAME)
 
 .PHONY: info
 info:
-	@echo -- $(TARGET_SYSROOT)
+	@echo -- Target sysroot: $(TARGET_SYSROOT)
 	@echo -- Project name: $(PROJECT_NAME)
 	@echo -- Compiling modules: $(MODULES)
 	@echo -- DMACROS: $(DMACROS)
@@ -125,7 +125,7 @@ info:
 ################################################################
 $(BIN_DIR)/$(PROJECT_NAME): $(C_OBJS) $(CXX_OBJS)
 	@echo -- Collecting object files into executable.
-	@$(CC) $(LDFLAGS) $(LDLIBS) -o $@ $^
+	@$(CXX) $(LDFLAGS) $(LDLIBS) -o $@ $^
 	@echo -- Done building! Generated: $@
 
 ################################################################

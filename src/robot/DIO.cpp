@@ -42,6 +42,9 @@ DIO::DIO(MyRioExpPort port, uint8_t pin, uint8_t dir)
   }
 }
 
+DIO::DIO(MyRioExpPort port, uint8_t pin)
+: DIO::DIO(port, pin, Registers::INPUT) {}
+
 void DIO::write(uint8_t val) {
   change_dir(pin_register_dir, Registers::OUTPUT, false);
   val = (val == 0) ? Registers::LOW : Registers::HIGH;

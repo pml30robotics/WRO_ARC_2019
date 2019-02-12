@@ -12,12 +12,10 @@ struct TetrixMotor: Motor {
 
   // implementation of Motor interface
   virtual void set_power(int16_t pwr);
-  virtual int32_t move_to_position_abs(int32_t cnts);
-  virtual int32_t move_to_position_rel(int32_t cnts);
+  virtual int32_t move_to_position_abs(int32_t cnts) { return 0; };
+  virtual int32_t move_to_position_rel(int32_t cnts) { return 0; };
   virtual int32_t get_count();
   virtual void reset();
-
-
 private:
   PWM *const pwm;
   DIO *const dio;
