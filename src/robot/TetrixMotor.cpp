@@ -1,3 +1,4 @@
+#include <cmath>
 #include "TetrixMotor.hpp"
 #include "myRio/MyRio.h"
 
@@ -15,7 +16,7 @@ void TetrixMotor::set_power(int16_t pwr) {
   } else {
     dio->write(Registers::LOW);
   }
-  pwm->write(pwr);
+  pwm->write(std::abs(pwr));
 }
 
 int32_t TetrixMotor::get_count() {

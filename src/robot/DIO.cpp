@@ -3,7 +3,7 @@
 extern NiFpga_Session myrio_session;
 
 DIO::DIO(MyRioExpPort port, uint8_t pin, uint8_t dir)
-: port(port), dir(dir)
+: status(0), port(port), dir(dir)
 {
   this->pin_num = pin_resolver(pin);
 

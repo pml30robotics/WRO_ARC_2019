@@ -2,6 +2,7 @@
 #define ROBOT_ROBOT_HPP
 
 #include "myRio/MyRio.h"
+#include <unistd.h>
 
 /**
  * Structs and classes decloration.
@@ -26,12 +27,13 @@ private:
  */
 struct Robot {
   static Robot& get_instance();
-  NiFpga_Status start_session();
-  NiFpga_Status end_session();
   NiFpga_Status get_status() const;
+  NiFpga_Status open_session();
+  NiFpga_Status close_session();
+  void sleep_millis();
 private:
   NiFpga_Status status;
-  Robot() {};
+  Robot() : status(0) {};
   Robot(Robot const &);
   Robot& operator=(Robot&);
   ~Robot() {};

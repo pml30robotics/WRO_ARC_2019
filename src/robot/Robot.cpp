@@ -27,15 +27,14 @@ Robot& Robot::get_instance() {
   return *instance_ptr;
 }
 
-NiFpga_Status Robot::start_session() {
+NiFpga_Status Robot::get_status() const {
+  return status;
+}
+
+NiFpga_Status Robot::open_session() {
   return (status = MyRio_Open());
 }
 
-NiFpga_Status Robot::end_session() {
+NiFpga_Status Robot::close_session() {
   return (status = MyRio_Close());
-}
-
-
-NiFpga_Status Robot::get_status() const {
-  return status;
 }

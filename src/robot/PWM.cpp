@@ -4,7 +4,7 @@ extern NiFpga_Session myrio_session;
 
 PWM::PWM(MyRioExpPort port, uint8_t pwm_cnfg, uint8_t pwm_num,
   MyRioClockDivider pwm_clock, uint16_t pwm_max)
-  : port(port), cnfg(pwm_cnfg), num(pwm_num), clock(pwm_clock), max(pwm_max)
+  : status(0), port(port), cnfg(pwm_cnfg), num(pwm_num), clock(pwm_clock), max(pwm_max)
 {
   num = pin_resolver(pwm_num);
 
@@ -97,7 +97,7 @@ void PWM::init_pwm_subsystem(MyRioConfigBitMask pwm, uint32_t sys_select_reg,
   uint8_t sys_select_prev_val ,uint32_t pwm_cnfg_reg, uint32_t pwm_cs_reg, uint32_t pwm_max_reg)
 {
   // enable pwm on sys_select
-  uint8_t sys_select_new_mask = sys_select_prev_val & static_cast<uint8_t>(pwm);
+  uint8_t sys_select_new_mask = sys_select_prev_val | static_cast<uint8_t>(pwm);
   NiFpga_MergeStatus(&status,
     NiFpga_WriteU8(myrio_session, sys_select_reg, sys_select_new_mask));
   // PWM config
