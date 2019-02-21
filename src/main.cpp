@@ -3,16 +3,12 @@
 #include "robot/Robot.hpp"
 #include "robot/TetrixMotor.hpp"
 
-extern NiFpga_Session myrio_session;
-
 int main(int argc, char **argv) {
-  //Robot& robot = Robot::get_instance();
-  MyRio_PrintStatus(MyRio_Open());
-  //MyRio_PrintStatus(robot.get_status());
+  Robot& robot = Robot::get_instance();
 
-  DIO mot_dio = DIO(MyRioExpPort::MXP_A, 10, Registers::OUTPUT);
+  robot.open_session();
 
-  PWM mot_pwm = PWM(
+  PWM mot_pwm(
     MyRioExpPort::MXP_A,
     PWM::ENABLE_INV | PWM::ENABLE_MODE,
     1,
@@ -20,19 +16,19 @@ int main(int argc, char **argv) {
     1000
   );
 
-  TetrixMotor test_mot = TetrixMotor(mot_pwm, mot_dio);
+  DIO mot_dio(MyRioExpPort::MXP_A, 10, DIO::Direction::OUTPUT);
+
+  TetrixMotor test_mot(mot_pwm, mot_dio);
 
   test_mot.set_power(900);
-
   // sleep for 3 second
   usleep(1000 * 3000);
 
-  test_mot.set_power(-600);
-
+  test_mot.set_power(-900);
   // sleep for 3 second
   usleep(1000 * 3000);
 
   test_mot.set_power(0);
 
-  MyRio_Close();
+  robot.close_session();
 }

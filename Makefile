@@ -89,11 +89,19 @@ BUILD_MODULES = $(addprefix $(BUILD_DIR)/, \
 C_SRCS := $(shell find $(MODULES) -maxdepth 1 -name '*.c')
 CXX_SRCS := $(shell find $(MODULES) -maxdepth 1 -name '*.cpp')
 
+C_OBJS := $(patsubst src/%.c, build/%.o, $(C_SRCS))
 ################################################################
 # List all generated object
 ################################################################
-C_OBJS := $(patsubst src/%.c, build/%.o, $(C_SRCS))
 CXX_OBJS := $(patsubst src/%.cpp, build/%.o, $(CXX_SRCS))
+
+################################################################
+# Default myRio deployment settings in local network
+################################################################
+MYRIO_HOST_NAME := ni-myrio-1900-robot30.local
+MYRIO_USER_NAME := admin
+MYRIO_DEPLOY_PATH := /home/admin
+MYRIO_DEPLOY := $(MYRIO_USER_NAME)@$(MYRIO_HOST_NAME):$(MYRIO_DEPLOY_PATH)
 
 #===============================================================================
 # TARGETS
@@ -108,6 +116,14 @@ _working_dirs:
 	@mkdir -p $(BUILD_DIR) $(BUILD_MODULES) $(BIN_DIR)
 
 ################################################################
+# Deployment
+################################################################
+.PHONY: deploy
+deploy: $(BIN_DIR)/$(PROJECT_NAME)
+	@echo -- Deploying: $< binary to $(MYRIO_DEPLOY).
+	@scp $< $(MYRIO_DEPLOY)
+
+################################################################
 # Building targets
 ################################################################
 .PHONY: build
@@ -118,7 +134,7 @@ info:
 	@echo -- Target sysroot: $(TARGET_SYSROOT)
 	@echo -- Project name: $(PROJECT_NAME)
 	@echo -- Compiling modules: $(MODULES)
-	@echo -- DMACROS: $(DMACROS)
+	@echo -- DMACROSes: $(DMACROS)
 
 ################################################################
 # Linking all generated object files into executable

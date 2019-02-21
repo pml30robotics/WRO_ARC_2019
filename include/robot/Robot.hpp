@@ -4,44 +4,12 @@
 #include "myRio/MyRio.h"
 #include <unistd.h>
 
-/**
+/******************************
+ *
  * Structs and classes decloration.
- */
+ *
+ ******************************/
 struct Robot;
-struct RobotDestroyer;
-
-/**
- * @enum RobotDestroyer
- * @brief Utiluty class for Robot object destruction.
- */
-struct RobotDestroyer {
-  ~RobotDestroyer();
-  void init(Robot* robot);
-private:
-  Robot* instance_ptr;
-};
-
-/**
- * @enum Robot
- * @brief Singleton class for robot hardware configuration.
- */
-struct Robot {
-  static Robot& get_instance();
-  NiFpga_Status get_status() const;
-  NiFpga_Status open_session();
-  NiFpga_Status close_session();
-  void sleep_millis();
-private:
-  NiFpga_Status status;
-  Robot() : status(0) {};
-  Robot(Robot const &);
-  Robot& operator=(Robot&);
-  ~Robot() {};
-  friend struct RobotDestroyer;
-  // Member fields decloration.
-  static Robot* instance_ptr;
-  static RobotDestroyer destroyer;
-};
 
 /******************************
  *
@@ -51,6 +19,26 @@ private:
 enum struct MyRioExpPort;
 enum struct MyRioClockDivider : uint8_t;
 enum struct MyRioConfigBitMask : uint8_t;
+
+/**
+ * @struct Robot
+ * @brief Singleton class for robot hardware configuration.
+ */
+
+struct Robot {
+  static Robot& get_instance();
+  NiFpga_Status get_status() const;
+  NiFpga_Status open_session();
+  NiFpga_Status close_session();
+private:
+  Robot() : status(0) {}
+  ~Robot() {}
+
+  Robot(Robot const&) = delete;
+  Robot& operator= (Robot const&) = delete;
+
+  NiFpga_Status status;
+};
 
 /**
  * @enum MyRioExpPort

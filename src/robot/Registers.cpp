@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Registers.hpp"
 
 extern NiFpga_Session myrio_session;
