@@ -18,15 +18,31 @@ int main(int argc, char **argv) {
 
   DIO mot_dio(MyRioExpPort::MXP_A, 10, DIO::Direction::OUTPUT);
 
-  TetrixMotor test_mot(mot_pwm, mot_dio);
+  MyRioEncoder mot_enc(
+    MyRioExpPort::MSP,
+    MyRioEncoder::CNFG_EN | MyRioEncoder::CNFG_CERR | MyRioEncoder::CNFG_COVR,
+    0
+  );
 
-  test_mot.set_power(900);
-  // sleep for 3 second
-  usleep(1000 * 3000);
+  TetrixMotor test_mot(mot_pwm, mot_dio, mot_enc);
 
   test_mot.set_power(-900);
-  // sleep for 3 second
+  std::cout << "Motor power is -900" << std::endl;
+  // sleep for 3 seconds
   usleep(1000 * 3000);
+  std::cout << "Current encoder counts: " << test_mot.get_count() << std::endl;
+
+  test_mot.set_power(0);
+  // sleep for half second
+  usleep(1000 * 500);
+  std::cout << std::endl;
+  test_mot.reset();
+
+  test_mot.set_power(900);
+  std::cout << "Motor power is 900" << std::endl;
+  // sleep for 3 seconds
+  usleep(1000 * 3000);
+  std::cout << "Current encoder counts: " << test_mot.get_count() << std::endl;
 
   test_mot.set_power(0);
 

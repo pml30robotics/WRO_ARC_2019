@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "MyRioEncoder.hpp"
 
 extern NiFpga_Session myrio_session;
@@ -51,9 +52,9 @@ int32_t MyRioEncoder::get_count() {
 }
 
 void MyRioEncoder::reset() {
-  // reset encoder
-  Registers::read_and_update_u8(cnfg_reg, 2, 1);
-  Registers::read_and_update_u8(cnfg_reg, 2, 0);
+  Registers::read_and_update_u8(cnfg_reg, 1, 1);
+  usleep(500); // sleeps for half milliseconds
+  Registers::read_and_update_u8(cnfg_reg, 1, 0);
 }
 
 NiFpga_Status MyRioEncoder::get_status() const {

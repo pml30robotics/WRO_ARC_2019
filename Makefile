@@ -106,6 +106,9 @@ MYRIO_DEPLOY := $(MYRIO_USER_NAME)@$(MYRIO_HOST_NAME):$(MYRIO_DEPLOY_PATH)
 #===============================================================================
 # TARGETS
 #===============================================================================
+.PHONY: all
+all: deploy
+
 .PHONY: clean
 clean:
 	@rm -rf $(BUILD_DIR)/* $(BIN_DIR)/*
@@ -119,7 +122,7 @@ _working_dirs:
 # Deployment
 ################################################################
 .PHONY: deploy
-deploy: $(BIN_DIR)/$(PROJECT_NAME)
+deploy: build
 	@echo -- Deploying: $< binary to $(MYRIO_DEPLOY).
 	@scp $< $(MYRIO_DEPLOY)
 
