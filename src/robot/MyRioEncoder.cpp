@@ -4,7 +4,7 @@
 extern NiFpga_Session myrio_session;
 
 MyRioEncoder::MyRioEncoder(MyRioExpPort port, uint8_t enc_cnfg, uint8_t enc_num)
-  : port(port)
+: port(port)
 {
   switch (port) {
     case MyRioExpPort::MSP:

@@ -1,9 +1,0 @@
-libdir=/usr/lib
-includedir=/usr/include
-
-Name: libsolvext
-Description: Library for reading repositories
-Version: 0.6.26
-Requires: libsolv
-Libs: -L${libdir} -lsolvext
-Cflags: -I${includedir}

@@ -28,11 +28,9 @@ enum struct MyRioConfigBitMask : uint8_t;
 struct Robot {
   static Robot& get_instance();
   NiFpga_Status get_status() const;
-  NiFpga_Status open_session();
-  NiFpga_Status close_session();
 private:
-  Robot() : status(0) {}
-  ~Robot() {}
+  Robot();
+  ~Robot();
 
   Robot(Robot const&) = delete;
   Robot& operator= (Robot const&) = delete;

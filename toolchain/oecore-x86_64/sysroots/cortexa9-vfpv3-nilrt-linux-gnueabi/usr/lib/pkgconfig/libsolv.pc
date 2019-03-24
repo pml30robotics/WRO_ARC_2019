@@ -1,8 +1,0 @@
-libdir=/usr/lib
-includedir=/usr/include
-
-Name: libsolv
-Description: Library for solving packages
-Version: 0.6.26
-Libs: -L${libdir} -lsolv
-Cflags: -I${includedir}

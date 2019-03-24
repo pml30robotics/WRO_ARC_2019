@@ -1,2 +1,0 @@
-# allow all users to write the LED state
-SUBSYSTEM=="leds", RUN="/bin/chmod a+w /sys%p/brightness"

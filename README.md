@@ -17,3 +17,7 @@ As a main controller is used **NI myRIO-1900** which have 2 **Expansion Port (MX
 - WI-FI: IEEE 802.11 b,g,n
 
 [myRIO official documentation](http://www.ni.com/pdf/manuals/376047c.pdf)
+
+## Installation
+
+To build project the "GNU C & C++ Compilers for ARMv7 Linux" should be installed and declared in Makefile in TOOLCHAIN_DIR variable. Specified toolchain can be downloaded from my [Google Drive](https://drive.google.com/file/d/1Vl-CFlGpVN-_7cPudg3TTurl4eZtOfNb/view?usp=sharing) or from [official NI site](http://www.ni.com/download/labview-real-time-module-2017/6760/en/)

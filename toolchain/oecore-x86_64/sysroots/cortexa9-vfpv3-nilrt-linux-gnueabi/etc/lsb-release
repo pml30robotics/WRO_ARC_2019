@@ -1,5 +1,0 @@
-LSB_VERSION="core-4.1-noarch:core-4.1-arm"
-DISTRIB_ID=nilrt-nxg
-DISTRIB_RELEASE=6.0
-DISTRIB_DESCRIPTION="NI Linux Real-Time 6.0"
-DISTRIB_CODENAME=Cobra

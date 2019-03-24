@@ -1,1 +1,0 @@
-git+https://github.com/saltstack/salt.git@2016.3#egg=Salt

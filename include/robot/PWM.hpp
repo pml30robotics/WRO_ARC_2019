@@ -4,6 +4,8 @@
 #include "myRio/MyRio.h"
 #include "Robot.hpp"
 
+#define PWM_DEFAULT_RES 1000
+
 struct PWM {
   enum : uint8_t {
     ENABLE_MODE = 0b00000100,

@@ -1,3 +1,0 @@
-/usr/bin/taskset
-/usr/lib/busybox/usr/bin/taskset 50
-/usr/bin/taskset.util-linux 80

@@ -1,2 +1,0 @@
-d root root 0755 /var/volatile/cache none
-l root root 0755 /var/cache /var/volatile/cache

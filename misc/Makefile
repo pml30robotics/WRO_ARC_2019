@@ -7,7 +7,7 @@
 #===============================================================================
 
 ################################################################
-# Default gmake options
+# Default make options
 ################################################################
 MAKEFLAGS += --output-sync --no-print-directory
 
@@ -20,8 +20,6 @@ PROJECT_NAME = robot
 # Environment setup
 ################################################################
 SHELL := /bin/bash
-# preinstalled toolchain
-TOOLCHAIN_DIR = /usr/local/oecore-x86_64
 
 ################################################################
 # Project directories
@@ -32,11 +30,12 @@ INCS_DIR = include
 SRC_DIR = src
 LIB_DIR = lib
 BIN_DIR = bin
+TOOLCHAIN_DIR = toolchain
 
 ################################################################
 # Toolchain setup
 ################################################################
-OECORE_SYSROOT := $(TOOLCHAIN_DIR)/sysroots
+OECORE_SYSROOT := $(TOOLCHAIN_DIR)/oecore-x86_64/sysroots
 TARGET_SYSROOT := $(OECORE_SYSROOT)/cortexa9-vfpv3-nilrt-linux-gnueabi
 NATIVE_SYSROOT := $(OECORE_SYSROOT)/x86_64-nilrtsdk-linux
 CROSS_COMPILER := arm-nilrt-linux-gnueabi
