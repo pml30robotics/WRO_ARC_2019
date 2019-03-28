@@ -115,7 +115,7 @@ export
 # TARGETS
 #===============================================================================
 .PHONY: all
-all: build install-remote
+all: build
 
 .PHONY: clean
 clean:

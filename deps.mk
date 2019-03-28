@@ -7,7 +7,7 @@ TOOLCHAIN_CORTEXA9_DIR := $(TOOLCHAIN_DIR)/sysroots/cortexa9-vfpv3-nilrt-linux-g
 ################################################################
 # List of all installing libraries
 ################################################################
-LIBS = -DCMAKE_INSTALL_PREFIX=$$SDKTARGETSYSROOT/usr
+LIBS =
 
 LIBCJSON := cJSON
 LIBCJSON_URL := https://github.com/DaveGamble/$(LIBCJSON).git
@@ -52,6 +52,7 @@ endif
 ################################################################
 .PHONY: install-remote-deps
 install-remote-deps: deps-rem-info install-libconfig-rem install-cjson-rem
+	@scp -r $(DEPS_DIR)/tmp/* $(MYRIO_USER_NAME)@$(MYRIO_HOST_NAME):/
 	@echo -- Libraries: $(LIBS) were successfully deployed.
 
 .PHONY: deps-rem-info
@@ -79,7 +80,6 @@ install-libconfig: $(DEPS_DIR)/$(LIBCONFIG)
 install-libconfig-rem: $(DEPS_DIR)/$(LIBCONFIG)
 	@mkdir -p $(DEPS_DIR)/tmp
 	@cd $(DEPS_DIR)/$(LIBCONFIG)/build && make install DESTDIR=$(PRJ_PATH)/$(DEPS_DIR)/tmp
-	@scp -r $(DEPS_DIR)/tmp $(MYRIO_USER_NAME)@$(MYRIO_HOST_NAME):/
 
 ################################################################
 # cJSON
@@ -102,4 +102,3 @@ install-cjson: $(DEPS_DIR)/$(LIBCJSON)
 install-cjson-rem: $(DEPS_DIR)/$(LIBCJSON)
 	@mkdir -p $(DEPS_DIR)/tmp
 	@cd $(DEPS_DIR)/$(LIBCJSON)/build && make install DESTDIR=$(PRJ_PATH)/$(DEPS_DIR)/tmp
-	@scp -r $(DEPS_DIR)/tmp $(MYRIO_USER_NAME)@$(MYRIO_HOST_NAME):/
