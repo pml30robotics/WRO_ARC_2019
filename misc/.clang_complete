@@ -1,1 +1,7 @@
-/media/andrew/MacintoshHD/documents/Robotics/myRIO/progs/WRO_ARC_2019/.clang_complete
+-DMyRio_1900
+-D_DEFAULT_SOURCE
+-Iinclude/
+-Iinclude/robot/myRio/
+-Iinclude/robot
+-Iinclude/utils
+--sysroot=/usr/local/oecore-x86_64/sysroots/cortexa9-vfpv3-nilrt-linux-gnueabi

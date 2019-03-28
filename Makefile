@@ -21,7 +21,8 @@ PROJECT_NAME = robot
 ################################################################
 SHELL := /bin/bash
 # preinstalled toolchain
-TOOLCHAIN_DIR = /usr/local/oecore-x86_64
+TOOLCHAIN_DIR := $(shell echo $$NI_MYRIO_TOOLCHAIN)
+TOOLCHAIN_ENV_SETUP := $(shell echo $$NI_MYRIO_ENV)
 
 ################################################################
 # Project directories
@@ -104,11 +105,17 @@ MYRIO_USER_NAME := admin
 MYRIO_DEPLOY_PATH := /home/admin
 MYRIO_DEPLOY := $(MYRIO_USER_NAME)@$(MYRIO_HOST_NAME):$(MYRIO_DEPLOY_PATH)
 
+################################################################
+# Includind dependencies targets
+################################################################
+export
+-include deps.mk
+
 #===============================================================================
 # TARGETS
 #===============================================================================
 .PHONY: all
-all: build deploy
+all: build install-remote
 
 .PHONY: clean
 clean:
@@ -122,8 +129,8 @@ _working_dirs:
 ################################################################
 # Deployment
 ################################################################
-.PHONY: deploy
-deploy: $(BIN_DIR)/$(PROJECT_NAME)
+.PHONY: install-remote
+install-remote: $(BIN_DIR)/$(PROJECT_NAME)
 	@echo -- Deploying: $< binary to $(MYRIO_DEPLOY).
 	@scp $< $(MYRIO_DEPLOY)
 
