@@ -17,6 +17,10 @@ LIBCONFIG := libconfig
 LIBCONFIG_URL := https://github.com/invadrew/$(LIBCONFIG).git
 LIBS += $(DEPS_DIR)/$(LIBCONFIG)
 
+LIBOPENCV := oepncv
+LIBOPENCV_URL := https://github.com/opencv/$(LIBOPENCV).git
+LIBS += $(DEPS_DIR)/$(LIBOPENCV)
+
 #===============================================================================
 # TARGETS
 #===============================================================================
@@ -55,8 +59,8 @@ install-remote-deps: deps-rem-info install-libconfig-rem install-cjson-rem
 	@scp -r $(DEPS_DIR)/tmp/* $(MYRIO_USER_NAME)@$(MYRIO_HOST_NAME):/
 	@echo -- Libraries: $(LIBS) were successfully deployed.
 
-.PHONY: deps-rem-info
-deps-rem-info:
+.PHONY: deps-remote-info
+deps-remote-info:
 	@echo -- Installing dependencies libraries on remote NI-myRIO host: $(MYRIO_USER_NAME)@$(MYRIO_HOST_NAME).
 
 ################################################################

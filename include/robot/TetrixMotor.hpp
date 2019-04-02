@@ -4,7 +4,7 @@
 #include "Motor.hpp"
 #include "PWM.hpp"
 #include "DIO.hpp"
-#include "MyRioEncoder.hpp"
+#include "../sensor/Encoder.hpp"
 
 struct TetrixMotor: Motor {
   TetrixMotor(PWM& pwm, DIO& dio, Encoder& encoder);

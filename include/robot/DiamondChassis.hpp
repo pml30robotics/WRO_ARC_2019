@@ -17,6 +17,8 @@ struct DiamondChassis {
   void drive_forward();
   // test method
   void stop();
+  // WIP method
+  void drive_dist_at_angle(uint16_t angle, uint16_t);
   /* Constant member fields */
   const int16_t MAX_SPEED = 900;
 

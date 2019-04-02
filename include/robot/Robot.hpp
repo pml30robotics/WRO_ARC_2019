@@ -4,12 +4,16 @@
 #include "myRio/MyRio.h"
 #include <unistd.h>
 
+#define I2C_MXP_SYS_REGISTER_NUM 7
+
 /******************************
  *
  * Structs and classes decloration.
  *
  ******************************/
 struct Robot;
+struct Robot_Config;
+struct MXP_Config;
 
 /******************************
  *
@@ -24,9 +28,11 @@ enum struct MyRioConfigBitMask : uint8_t;
  * @struct Robot
  * @brief Singleton class for robot hardware configuration.
  */
-
 struct Robot {
   static Robot& get_instance();
+
+  NiFpga_Status init(Robot_Config& config);
+
   NiFpga_Status get_status() const;
 private:
   Robot();
@@ -35,7 +41,28 @@ private:
   Robot(Robot const&) = delete;
   Robot& operator= (Robot const&) = delete;
 
+  void i2c_init();
+
   NiFpga_Status status;
+  Robot_Config const* config;
+};
+
+/**
+ * @struct MXP_Config
+ * @brief configuration data-only embeddable configuration structure for specified MXP port on myRIO
+ */
+struct MXP_Config {
+  bool I2C_enable;
+  uint8_t I2C_cntr;
+};
+
+/**
+ * @struct RobotConfig
+ * @brief configuration data-only structure
+ */
+struct Robot_Config {
+  MXP_Config MXP_A;
+  MXP_Config MXP_B;
 };
 
 /**

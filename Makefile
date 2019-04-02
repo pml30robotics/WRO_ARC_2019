@@ -81,7 +81,7 @@ INCS = -I$(addprefix $(INCS_DIR), $(dir $(subst $(SRC_DIR), , $<)))
 ################################################################
 # Defining which directories should be compiled
 ################################################################
-override MODULES += $(SRC_DIR) $(SRC_DIR)/robot/myRio $(SRC_DIR)/robot
+override MODULES += $(SRC_DIR) $(SRC_DIR)/robot/myRio $(SRC_DIR)/robot $(SRC_DIR)/sensor
 BUILD_MODULES = $(addprefix $(BUILD_DIR)/, \
 	$(patsubst /%, %, $(subst $(SRC_DIR), , $(MODULES))))
 

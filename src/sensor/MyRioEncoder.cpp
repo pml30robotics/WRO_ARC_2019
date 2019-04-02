@@ -1,11 +1,8 @@
-#include <unistd.h>
 #include "MyRioEncoder.hpp"
 
 extern NiFpga_Session myrio_session;
 
-MyRioEncoder::MyRioEncoder(MyRioExpPort port, uint8_t enc_cnfg, uint8_t enc_num)
-: port(port)
-{
+MyRioEncoder::MyRioEncoder(MyRioExpPort port, uint8_t enc_cnfg, uint8_t enc_num) {
   switch (port) {
     case MyRioExpPort::MSP:
       enc_num = enc_num % 2;
@@ -41,7 +38,6 @@ MyRioEncoder::MyRioEncoder(MyRioExpPort port, uint8_t enc_cnfg, uint8_t enc_num)
       cntr_reg = ENCBCNTR;
       cnfg_reg = ENCBCNFG;
   }
-
 }
 
 int32_t MyRioEncoder::get_count() {
@@ -53,7 +49,6 @@ int32_t MyRioEncoder::get_count() {
 
 void MyRioEncoder::reset() {
   Registers::read_and_update_u8(cnfg_reg, 1, 1);
-  usleep(500); // sleeps for half milliseconds
   Registers::read_and_update_u8(cnfg_reg, 1, 0);
 }
 

@@ -1,7 +1,7 @@
-#ifndef ROBOT_ENCODER_HPP
-#define ROBOT_ENCODER_HPP
+#ifndef SENSOR_ENCODER_HPP
+#define SENSOR_ENCODER_HPP
 
-#include "myRio/MyRio.h"
+#include "../robot/myRio/MyRio.h"
 /**
  * Encoder interface
  */
