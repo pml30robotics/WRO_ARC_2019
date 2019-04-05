@@ -46,7 +46,7 @@ void MPU9255::init() {
   data_out[0] = PWR_MGMT_1;
   data_out[1] = 0x00;
   i2c_device->write(data_out, 2);
-  usleep(1000 * 2000);
+  usleep(1000 * 100);
 
   data_out[0] = PWR_MGMT_1;
   data_out[1] = 0x01;
@@ -109,6 +109,26 @@ void MPU9255::init() {
   data_out[1] = 0x01;
   i2c_device->write(data_out, 3);
   usleep(1000 * 1000);
+
+  // writeByte(MPU9250_ADDRESS, PWR_MGMT_1, 0x00);
+	// delay(100);
+	// writeByte(MPU9250_ADDRESS, PWR_MGMT_1, 0x01);
+	// delay(200);
+	// writeByte(MPU9250_ADDRESS, CONFIG, 0x03);
+	// writeByte(MPU9250_ADDRESS, SMPLRT_DIV, 0x04);
+	// uint8_t c = readByte(MPU9250_ADDRESS, GYRO_CONFIG);
+	// writeByte(MPU9250_ADDRESS, GYRO_CONFIG, c & ~0x02);
+	// writeByte(MPU9250_ADDRESS, GYRO_CONFIG, c & ~0x18);
+	// writeByte(MPU9250_ADDRESS, GYRO_CONFIG, c | Gscale << 3);
+	// c = readByte(MPU9250_ADDRESS, ACCEL_CONFIG);
+	// writeByte(MPU9250_ADDRESS, ACCEL_CONFIG, c & ~0x18);
+	// writeByte(MPU9250_ADDRESS, ACCEL_CONFIG, c | Ascale << 3);
+	// c = readByte(MPU9250_ADDRESS, ACCEL_CONFIG2);
+	// writeByte(MPU9250_ADDRESS, ACCEL_CONFIG2, c & ~0x0F);
+	// writeByte(MPU9250_ADDRESS, ACCEL_CONFIG2, c | 0x03);
+	// writeByte(MPU9250_ADDRESS, INT_PIN_CFG, 0x22);
+	// writeByte(MPU9250_ADDRESS, INT_ENABLE, 0x01);
+  // delay(1000);
 }
 
 double MPU9255::get_X_angle_accel() {
@@ -117,6 +137,7 @@ double MPU9255::get_X_angle_accel() {
   i2c_device->write(data_out, 2);
   i2c_device->read(data_in ,2);
 
+  usleep(100);
   return (((int16_t)data_in[0] << 8) | data_in[1]) / g_scale_val;
 }
 
@@ -126,6 +147,7 @@ double MPU9255::get_Y_angle_accel() {
   i2c_device->write(data_out, 2);
   i2c_device->read(data_in ,2);
 
+  usleep(100);
   return (((int16_t)data_in[0] << 8) | data_in[1]) / g_scale_val;
 }
 
@@ -135,6 +157,7 @@ double MPU9255::get_Z_angle_accel() {
   i2c_device->write(data_out, 2);
   i2c_device->read(data_in ,2);
 
+  usleep(100);
   return (((int16_t)data_in[0] << 8) | data_in[1]) / g_scale_val;
 }
 double MPU9255::get_X_angle() {
@@ -153,6 +176,7 @@ double MPU9255::get_X_accel() {
   i2c_device->write(data_out, 2);
   i2c_device->read(data_in ,2);
 
+  usleep(100);
   return (((int16_t)data_in[0] << 8) | data_in[1]) / a_scale_val;
 }
 
@@ -162,6 +186,7 @@ double MPU9255::get_Y_accel() {
   i2c_device->write(data_out, 2);
   i2c_device->read(data_in ,2);
 
+  usleep(100);
   return (((int16_t)data_in[0] << 8) | data_in[1]) / a_scale_val;
 }
 
@@ -169,8 +194,9 @@ double MPU9255::get_Z_accel() {
   uint8_t data_in[2];
   uint8_t data_out[1] = {ACCEL_ZOUT_H};
   i2c_device->write(data_out, 2);
-  i2c_device->read(data_in ,2);
+  i2c_device->read(data_in , 2);
 
+  usleep(100);
   return (((int16_t)data_in[0] << 8) | data_in[1]) / a_scale_val;
 }
 

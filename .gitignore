@@ -1,4 +1,6 @@
 /bin/
 /build/
 /deps/
+/tmp/
+.ipynb_checkpoints
 /.clang_complete

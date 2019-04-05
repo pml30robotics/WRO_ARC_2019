@@ -81,7 +81,7 @@ struct MPU9255 : Sensor, Gyroscope, Accelerometer {
 private:
   I2CDevice* i2c_device;
   uint8_t g_scale, a_scale;
-  double g_scale_val, a_scale_val;
+  float g_scale_val, a_scale_val;
 };
 
 #endif
