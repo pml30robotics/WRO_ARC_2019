@@ -2,9 +2,6 @@
 #define ROBOT_ROBOT_HPP
 
 #include "myRio/MyRio.h"
-#include <unistd.h>
-
-#define I2C_MXP_SYS_REGISTER_NUM 7
 
 /******************************
  *
@@ -29,22 +26,47 @@ enum struct MyRioConfigBitMask : uint8_t;
  * @brief Singleton class for robot hardware configuration.
  */
 struct Robot {
+  /*
+   * Singleton implementation
+   */
   static Robot& get_instance();
 
   NiFpga_Status init(Robot_Config& config);
-
   NiFpga_Status get_status() const;
+
+  void get_coordinates(double* coord);
+  /*
+   * Public constansts
+   */
+  const double G_ACC = 9.81908;
 private:
+  /*
+   * Singleton implementation
+   */
   Robot();
   ~Robot();
-
   Robot(Robot const&) = delete;
   Robot& operator= (Robot const&) = delete;
 
+  // subsystems  initialization
   void i2c_init();
+
+  // coordinates calculation utils
+  double simple_kalman_filter(double prev_state, double curr_state, double k);
+  double integrate(double prev_state, double curr_state, double elapsed_sec);
+
+  // coordinates calculation variables
+  double filtered_acc_prev_state[3] = {.0}; // filtered accel values
+  double spd_prev_state[3] = {.0}; // integrated accel values
+  double coord_prev_state[3] = {.0}; // integrated speed values
+  double kalman_k[3] = {0.02, 0.02, 0.02};
 
   NiFpga_Status status;
   Robot_Config const* config;
+
+  enum Regissters_Nums {
+    I2C_MXP_SYS = 7
+  };
 };
 
 /**
@@ -52,6 +74,11 @@ private:
  * @brief configuration data-only embeddable configuration structure for specified MXP port on myRIO
  */
 struct MXP_Config {
+  enum : uint8_t {
+    I2C_CNTR_DISABLE = 0,
+    I2C_CNTR_100_KBPS = 213,
+    I2C_CNTR_400_KBPS = 63
+  };
   bool I2C_enable;
   uint8_t I2C_cntr;
 };

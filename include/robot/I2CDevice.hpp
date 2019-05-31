@@ -10,9 +10,12 @@
 struct I2CDevice {
   I2CDevice(uint8_t address);
 
-  virtual void request_bytes(uint8_t req_addr, uint8_t* data, uint32_t numBytes) = 0;
-  virtual void read(uint8_t* data, uint32_t numBytes) = 0;
-  virtual void write(uint8_t* data, uint32_t numBytes) = 0;
+  virtual void request_bytes(uint8_t reg_addr, uint8_t* data, uint32_t num_bytes) = 0;
+  virtual void read_bytes(uint8_t* data, uint32_t num_bytes) = 0;
+  virtual void write_bytes(uint8_t* data, uint32_t num_bytes) = 0;
+
+  virtual uint8_t read_byte(uint8_t reg_addr) = 0;
+  virtual void write_byte(uint8_t reg_addr, uint8_t data) = 0;
 
   void set_address(uint8_t i2c_address);
   uint8_t get_address();

@@ -5,7 +5,7 @@ PID::PID(double p_k, double i_k, double d_k)
 
 PID::PID() : PID::PID(0, 0, 0) {}
 
-double PID::calc_action(double curr_state, time_t elapsed_time) {
+double PID::calc_action(double curr_state, double elapsed_time) {
   /*
    https://en.wikipedia.org/wiki/PID_controller#Discrete_implementation
   */
@@ -19,7 +19,10 @@ double PID::calc_action(double curr_state, time_t elapsed_time) {
 
   return P + I + D;
 }
-void PID::set_actoin_range(double max, double min) {}
+
+void PID::set_actoin_range(double max, double min) {
+  
+}
 
 void PID::set_P(double p_k) {
   this->p_k = p_k;

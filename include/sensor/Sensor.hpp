@@ -3,7 +3,7 @@
 
 struct Sensor {
   virtual void calibrate() = 0;
-  virtual void init() = 0;
+  virtual bool init() = 0;
 };
 
 #endif

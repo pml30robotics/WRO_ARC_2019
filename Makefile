@@ -75,13 +75,14 @@ CPPFLAGS += $(DMACROS)
 ################################################################
 # Dependencies: libraries and header files
 ################################################################
-LDLIBS = -L$(LIB_DIR) -ldl
-INCS = -I$(addprefix $(INCS_DIR), $(dir $(subst $(SRC_DIR), , $<)))
+# include root 'include' dir and module specific
+INCS = -I$(INCS_DIR) -I$(addprefix $(INCS_DIR), $(dir $(subst $(SRC_DIR), , $<)))
+LDLIBS = -L$(LIB_DIR) -lpthread -ldl
 
 ################################################################
 # Defining which directories should be compiled
 ################################################################
-override MODULES += $(SRC_DIR) $(SRC_DIR)/robot/myRio $(SRC_DIR)/robot $(SRC_DIR)/sensor
+override MODULES += $(SRC_DIR) $(SRC_DIR)/robot/myRio $(SRC_DIR)/robot $(SRC_DIR)/sensor $(SRC_DIR)/utils
 BUILD_MODULES = $(addprefix $(BUILD_DIR)/, \
 	$(patsubst /%, %, $(subst $(SRC_DIR), , $(MODULES))))
 
@@ -103,7 +104,7 @@ CXX_OBJS := $(patsubst src/%.cpp, build/%.o, $(CXX_SRCS))
 MYRIO_HOST_NAME := ni-myrio-1900-robot30.local
 MYRIO_USER_NAME := admin
 MYRIO_DEPLOY_PATH := /home/admin
-MYRIO_DEPLOY := $(MYRIO_USER_NAME)@$(MYRIO_HOST_NAME):$(MYRIO_DEPLOY_PATH)
+MYRIO_DEPLOY := $(MYRIO_USER_NAME)@$(MYRIO_HOST_NAME):$(MYRIO_DEPLOY_PATH) 2> /dev/null
 
 ################################################################
 # Includind dependencies targets

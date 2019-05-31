@@ -24,15 +24,15 @@ MyRioI2CDevice::MyRioI2CDevice(MyRioExpPort port, uint8_t address)
   }
 }
 
-void MyRioI2CDevice::request_bytes(uint8_t req_addr, uint8_t* data, uint32_t numBytes) {
-  uint8_t data_out[] = {req_addr};
+void MyRioI2CDevice::request_bytes(uint8_t reg_addr, uint8_t* data, uint32_t num_bytes) {
+  uint8_t data_out[] = {reg_addr};
 
-  write(data_out, 2);
-  read(data, numBytes);
+  write_bytes(data_out, 1);
+  read_bytes(data, num_bytes);
 }
 
 /* Copied from 'myRIO examples-I2C' */
-void MyRioI2CDevice::read(uint8_t* data, uint32_t numBytes) {
+void MyRioI2CDevice::read_bytes(uint8_t* data, uint32_t num_bytes) {
   const uint8_t timeoutDelay = 1;  /* 1 Second */
   NiFpga_Status status;
     uint32_t index;
@@ -71,18 +71,18 @@ void MyRioI2CDevice::read(uint8_t* data, uint32_t numBytes) {
     /*
      * Store the index value for the last byte.
      */
-    lastIndex = numBytes - 1;
+    lastIndex = num_bytes - 1;
 
     /*
      * Repeat for all bytes
      */
-    for (index = 0; index < numBytes; index++)
+    for (index = 0; index < num_bytes; index++)
     {
         /*
          * If there is only one byte then the I2C transmission is different
          * than if there is more than 1 byte to write.
          */
-        if (numBytes == 1)
+        if (num_bytes == 1)
         {
             /*
              * Only one byte.
@@ -258,7 +258,7 @@ void MyRioI2CDevice::read(uint8_t* data, uint32_t numBytes) {
 }
 
 /* Copied from 'myRIO examples-I2C' */
-void MyRioI2CDevice::write(uint8_t* data, uint32_t numBytes) {
+void MyRioI2CDevice::write_bytes(uint8_t* data, uint32_t num_bytes) {
   const uint8_t timeoutDelay = 1;  /* 1 Second */
   uint32_t index;
   uint32_t lastIndex;
@@ -278,7 +278,7 @@ void MyRioI2CDevice::write(uint8_t* data, uint32_t numBytes) {
    *
    * Shift the address one bit to the left and clear bit0.
    */
-  uint8_t _i2c_address = (i2c_address << 1) | 0x01;
+  uint8_t _i2c_address = (i2c_address << 1) & 0xFE;
 
   /*
    * Set the address of the slave device.
@@ -298,47 +298,37 @@ void MyRioI2CDevice::write(uint8_t* data, uint32_t numBytes) {
   /*
    * Store the index value for the last byte.
    */
-  lastIndex = numBytes - 1;
+  lastIndex = num_bytes - 1;
 
   /*
    * Repeat for all bytes. If there was a timeout or an error then don't continue to
    * send the rest of the data bytes so break out of the loop.
    */
-  for (index = 0; (index < numBytes) && (!timeout & !error); index++)
-  {
+  for (index = 0; (index < num_bytes) && (!timeout & !error); index++) {
       /*
        * If there is only one byte then the I2C transmission is different
        * than if there is more than 1 byte to write.
        */
-      if (numBytes == 1)
-      {
+      if (num_bytes == 1) {
           /*
            * Only one byte.
            * Generate start bit, send byte, and generate stop bit.
            */
           control = I2c_Start | I2c_Rx_Tx | I2c_Stop; /* 0b00000111 */
-      }
-      else
-      {
-          if (index == 0)
-          {
+      } else {
+          if (index == 0) {
               /*
                * First byte.
                * Generate start bit and send the first byte.
                */
               control = I2c_Start | I2c_Rx_Tx; /* 0b00000011 */
-
-          }
-          else if (index == lastIndex)
-          {
+          } else if (index == lastIndex) {
               /*
                * Last byte.
                * Send the last byte and generate stop bit
                */
               control = I2c_Rx_Tx | I2c_Stop; /* 0b00000101 */
-          }
-          else
-          {
+          } else {
               /*
                * Intermediate byte.
                * Send the byte.
@@ -360,8 +350,7 @@ void MyRioI2CDevice::write(uint8_t* data, uint32_t numBytes) {
        * function cannot return early otherwise the I2C bus will not be
        * released and will be left in a bad state.
        */
-      if (MyRio_IsNotSuccess(status))
-      {
+      if (MyRio_IsNotSuccess(status)) {
           error = NiFpga_True;
           MyRio_PrintStatus(status);
           printf("Could not write to the I2C data out register!");
@@ -372,8 +361,7 @@ void MyRioI2CDevice::write(uint8_t* data, uint32_t numBytes) {
        * Write the control byte.
        */
       status = NiFpga_WriteU8(myrio_session, cntl_reg, control);
-      if (MyRio_IsNotSuccess(status))
-      {
+      if (MyRio_IsNotSuccess(status)) {
           error = NiFpga_True;
           MyRio_PrintStatus(status);
           printf("Could not write to the I2C control register!");
@@ -387,8 +375,7 @@ void MyRioI2CDevice::write(uint8_t* data, uint32_t numBytes) {
        * after the I2C block starts the operation.
        */
       status = NiFpga_WriteBool(myrio_session, go_reg, NiFpga_True);
-      if (MyRio_IsNotSuccess(status))
-      {
+      if (MyRio_IsNotSuccess(status)) {
           error = NiFpga_True;
           MyRio_PrintStatus(status);
           printf("Could not start the I2C operation!");
@@ -399,14 +386,12 @@ void MyRioI2CDevice::write(uint8_t* data, uint32_t numBytes) {
        * Wait for the I2C operation to complete
        */
       startTime = time(NULL); /* Get the start time */
-      do
-      {
+      do {
           /*
            * Get the status of the I2C block.
            */
           status = NiFpga_ReadU8(myrio_session, stat_reg, &stat);
-          if (MyRio_IsNotSuccess(status))
-          {
+          if (MyRio_IsNotSuccess(status)) {
               error = NiFpga_True;
               MyRio_PrintStatus(status);
               printf("Could not read from the I2C status register!");
@@ -418,8 +403,7 @@ void MyRioI2CDevice::write(uint8_t* data, uint32_t numBytes) {
            */
           busy = stat & I2c_Busy;
 
-          if (!busy)
-          {
+          if (!busy) {
               break;
           }
           /*
@@ -435,11 +419,9 @@ void MyRioI2CDevice::write(uint8_t* data, uint32_t numBytes) {
        * If there was no error with the operation of the I2C block then check
        * if there was an error with the actual I2C transmission.
        */
-      if (!timeout || !error)
-      {
+      if (!timeout || !error) {
           error = stat & I2c_Error;
-          if (error)
-          {
+          if (error) {
               /*
                * Pull out the values of the Address NAK and Data NAK bits.
                */
@@ -458,12 +440,25 @@ void MyRioI2CDevice::write(uint8_t* data, uint32_t numBytes) {
    * then the stop bit would have already been generated so this step can be
    * skipped.
    */
-  if (timeout || error)
-  {
+  if (timeout || error) {
       status = NiFpga_WriteU8(myrio_session, cntl_reg, I2c_Stop);
       MyRio_ReturnIfNotSuccess(status,
                   "Could not write to the I2C control register!");
   }
+}
+
+uint8_t MyRioI2CDevice::read_byte(uint8_t reg_addr) {
+  uint8_t data[] = {reg_addr};
+
+  write_bytes(data, 1);
+  read_bytes(data, 1);
+  return data[0];
+}
+
+void MyRioI2CDevice::write_byte(uint8_t reg_addr, uint8_t data) {
+  uint8_t data_out[] = {reg_addr, data};
+
+  write_bytes(data_out, 2);
 }
 
 NiFpga_Status MyRioI2CDevice::get_status() const {

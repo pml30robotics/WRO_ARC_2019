@@ -39,9 +39,12 @@
 struct MyRioI2CDevice: I2CDevice {
   MyRioI2CDevice(MyRioExpPort port, uint8_t address);
 
-  virtual void request_bytes(uint8_t req_addr, uint8_t* data, uint32_t numBytes);
-  virtual void read(uint8_t* data, uint32_t numBytes);
-  virtual void write(uint8_t* data, uint32_t numBytes);
+  virtual void request_bytes(uint8_t reg_addr, uint8_t* data, uint32_t num_bytes);
+  virtual void read_bytes(uint8_t* data, uint32_t num_bytes);
+  virtual void write_bytes(uint8_t* data, uint32_t num_bytes);
+
+  virtual uint8_t read_byte(uint8_t reg_addr);
+  virtual void write_byte(uint8_t reg_addr, uint8_t data);
 
   NiFpga_Status get_status() const;
 private:
@@ -53,7 +56,5 @@ private:
   uint32_t data_in_reg;
   uint32_t data_out_reg;
 };
-
-
 
 #endif
